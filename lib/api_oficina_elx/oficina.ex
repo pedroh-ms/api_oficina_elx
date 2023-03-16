@@ -7,7 +7,7 @@ defmodule ApiOficinaElx.Oficina do
   alias ApiOficinaElx.Repo
 
   alias ApiOficinaElx.Oficina.Dono
-  
+
   @doc """
   Returns the list of donos where `Dono.nome` is like `nome`
 
@@ -15,7 +15,7 @@ defmodule ApiOficinaElx.Oficina do
 
       iex> list_donos()
       [%Dono{}, ...]
-      
+
   """
   def list_donos(%{"nome" => nome}) do
     like = "%#{nome}%"
@@ -119,6 +119,29 @@ defmodule ApiOficinaElx.Oficina do
   end
 
   alias ApiOficinaElx.Oficina.Carro
+
+  @doc """
+  Returns the list of carros.
+
+  ## Examples
+
+      iex> list_carros()
+      [%Carro{}, ...]
+
+  """
+  def list_carros("with_donos") do
+    query = from c in Carro,
+      join: d in Dono,
+      on: d.id == c.dono_id,
+      select: %{
+        id: c.id,
+        nome: c.nome,
+        cor: c.cor,
+        dono: d
+      }
+
+    Repo.all(query)
+  end
 
   @doc """
   Returns the list of carros.
