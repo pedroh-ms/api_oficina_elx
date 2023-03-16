@@ -6,6 +6,11 @@ defmodule ApiOficinaElxWeb.CarroController do
 
   action_fallback ApiOficinaElxWeb.FallbackController
 
+  def index(conn, %{"query_type" => "with_donos"}) do
+    carros = Oficina.list_carros("with_donos")
+    render(conn, "indexdonos.json", carros: carros)
+  end
+
   def index(conn, _params) do
     carros = Oficina.list_carros()
     render(conn, "index.json", carros: carros)
