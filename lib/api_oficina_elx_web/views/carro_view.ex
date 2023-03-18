@@ -26,7 +26,11 @@ defmodule ApiOficinaElxWeb.CarroView do
   def render("carrodono.json", %{carro: carro}) do
     %{
       id: carro.id,
-      dono: carro.dono.nome,
+      dono: %{
+        id: carro.dono.id,
+        nome: carro.dono.nome,
+        numero_celular: carro.dono.numero_celular
+      },
       nome: carro.nome,
       cor: carro.cor
     }
