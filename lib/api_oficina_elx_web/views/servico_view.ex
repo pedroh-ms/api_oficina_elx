@@ -36,7 +36,8 @@ defmodule ApiOficinaElxWeb.ServicoView do
       carro: %{
         id: servico.carro.id,
         nome: servico.carro.nome,
-        cor: servico.carro.cor
+        cor: servico.carro.cor,
+        dono_id: servico.carro.dono_id
       },
       data_entrega: servico.data_entrega,
       preco: servico.preco,
