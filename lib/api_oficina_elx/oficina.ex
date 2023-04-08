@@ -248,6 +248,33 @@ defmodule ApiOficinaElx.Oficina do
       [%Servico{}, ...]
 
   """
+  def list_servicos("with_donos_carros") do
+    query = from s in Servico,
+      join: d in Dono,
+      on: s.dono_id == d.id,
+      join: c in Carro,
+      on: s.carro_id == c.id,
+      select: %{
+        id: s.id,
+        data_entrega: s.data_entrega,
+        preco: s.preco,
+        observacao: s.observacao,
+        dono: d,
+        carro: c
+      }
+
+    Repo.all(query)
+  end
+
+  @doc """
+  Returns the list of servicos.
+
+  ## Examples
+
+      iex> list_servicos()
+      [%Servico{}, ...]
+
+  """
   def list_servicos do
     Repo.all(Servico)
   end

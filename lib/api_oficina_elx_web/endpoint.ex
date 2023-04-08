@@ -45,7 +45,7 @@ defmodule ApiOficinaElxWeb.Endpoint do
 
   plug CORSPlug, origin: [ ~r/http:\/\/localhost:\d+/, ~r/https:\/\/localhost:\d+/, ~r/http:\/\/192.168.0.\d+:\d+/, ~r/https:\/\/192.168.0.\d+:\d+/, "http://localhost" ],
     max_age: 86400,
-    methods: ["GET", "POST"]
+    methods: ["HEAD", "GET", "POST", "PUT", "DELETE"]
 
   plug Plug.MethodOverride
   plug Plug.Head
