@@ -14,15 +14,28 @@ defmodule ApiOficinaElxWeb.Router do
     plug :accepts, ["json"]
   end
 
+  pipeline :auth do
+    plug ApiOficinaElx.Guardian.AuthPipeline
+  end
+
   scope "/", ApiOficinaElxWeb do
     pipe_through :browser
 
     get "/", PageController, :index
   end
 
-  # Other scopes may use custom stacks.
   scope "/api", ApiOficinaElxWeb do
     pipe_through :api
+
+    post "/users", UserController, :register
+    post "/session/new", SessionController, :new
+  end
+  # Other scopes may use custom stacks.
+  scope "/api", ApiOficinaElxWeb do
+    pipe_through [:api, :auth]
+
+    post "/session/refresh", SessionController, :refresh
+    post "/session/delete", SessionController, :delete
 
     resources "/donos", DonoController, except: [:new, :edit]
     resources "/carros", CarroController, except: [:new, :edit]
