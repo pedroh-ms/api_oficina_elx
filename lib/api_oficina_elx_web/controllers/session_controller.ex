@@ -25,6 +25,18 @@ defmodule ApiOficinaElxWeb.SessionController do
 
         conn
         |> send_resp(401, body)
+
+      {:error, :not_found} ->
+        body = Jason.encode!(%{error: "not found"})
+
+        conn
+        |> send_resp(401, body)
+
+      {:error, _} ->
+        body = Jason.encode!(%{error: "error"})
+
+        conn
+        |> send_resp(500, body)
     end
   end
 
